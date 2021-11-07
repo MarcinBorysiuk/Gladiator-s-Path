@@ -1,0 +1,36 @@
+<style>
+    .modal-content {
+      background-color: #212121
+    }
+
+  </style>
+  
+
+  <div class="modal fade" id="Modal-EquippedArmor-{{ equipped_armor.id }}"
+       tabindex="-1"
+       aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="width:200px;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title w-100 text-center" id="ModalLabel" >
+            {{ equipped_armor.name }}
+          </h5>
+        </div>
+        <div class="modal-body w-100 text-center">
+            <div style="border: solid 2px white; height: 65px; width: 65px; margin-left: 50px;">
+                <img src="{{ equipped_armor.picture }}" height="60" width="60">
+            </div>
+            <br>
+            <p>Level {{ equipped_armor.level }}</p>
+            <p>Armor {{ equipped_armor.armor }}</p>
+            <p>Cost {{ equipped_armor.cost }}</p>
+          
+        </div>
+        <div class="modal-footer">
+          <form action="/take_off/armor/{{ equipped_armor.id }}">
+            <button type="submit" class="btn btn-warning" style="margin-right: 40px;">Take Off</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,40 @@
+<style>
+    .modal-content {
+      background-color: #212121
+    }
+
+  </style>
+  
+{% if item in potions %}
+  <div class="modal fade" id="Modal-InventoryPotion-{{ item.id }}"
+       tabindex="-1"
+       aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="width:200px;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title w-100 text-center" id="ModalLabel" >
+            {{ item.name }}
+          </h5>
+        </div>
+        <div class="modal-body w-100 text-center">
+            <div style="border: solid 2px white; height: 65px; width: 65px; margin-left: 50px;">
+                <img src="{{ item.picture }}" height="60" width="60">
+            </div>
+            <br>
+            <p>Level {{ item.level }}</p>
+            <p>Heals {{ item.heal }}</p>
+            <p>Cost {{ item.cost }}</p>
+          
+        </div>
+        <div class="modal-footer">
+          <form action="/use/potion/{{ item.id }}">
+            <button type="submit" class="btn btn-success" style="width: 70px">Use</button>
+          </form>
+          <form action="/sell/potion/{{ item.id }}">
+            <button type="submit" class="btn btn-warning" style="width: 70px; margin-right: 10px;">Sell</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

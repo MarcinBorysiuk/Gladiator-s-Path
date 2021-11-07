@@ -1,0 +1,42 @@
+
+<style>
+    .modal-content {
+      background-color: #212121
+    }
+
+  </style>
+  
+{% if weapon.owner == None %}
+  <div class="modal fade" id="Modal-BlacksmithWeapon-{{ weapon.id }}"
+       tabindex="-1"
+       aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="width:200px;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title w-100 text-center" id="ModalLabel" >
+            {{ weapon.name }}
+          </h5>
+        </div>
+        <div class="modal-body w-100 text-center">
+            <div style="border: solid 2px white; height: 65px; width: 65px; margin-left: 50px;">
+                <img src="{{ weapon.picture }}" height="60" width="60">
+            </div>
+            <br>
+            <p>Level {{ weapon.level }}</p>
+            <p>Damage {{ weapon.damage }}</p>
+            <p>Cost {{ weapon.cost }}</p>
+          
+        </div>
+        <div class="modal-footer">
+            {% if player.gold >= weapon.cost and player.level >= weapon.level %}
+                <form method="POST" action="/blacksmith/buy/{{ weapon.id }}">
+                    <button type="submit" class="btn btn-success" style="margin-right: 57px;">Buy</button>
+                </form>
+            {% else %}
+                <p style="margin-right: 15px; color: red">Cannot buy this item</p>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block head %}Training{% endblock %}
+
+{% block content %}
+<div class="row" style="margin: 30px">
+    <div class="col-3">
+        <table>
+            <tr><th><a class="link" href='/overview'>Overview</a></th></tr>
+            <tr><th><a class="link" href="/expedition">Expedition</a></th></tr>
+            <tr><th><a class="link" href="/training">Training</a></th></tr>
+            <tr><th><a class="link" href="/blacksmith">Blacksmith</a></th></tr>
+            <tr><th><a class="link" href="/armor">Armour</a></th></tr>
+            <tr><th><a class="link" href="/potions">Potions</a></th></tr>
+        </table>
+    </div>
+    
+    <div class="col-5">
+        <img src="https://s50-pl.gladiatus.gameforge.com/game/9401/img/npc/0/0_2.jpg" style="float: left; margin-right: 20px;">
+        <div style="text-align: center; font-size: 14px;">
+            <h4>Welcome {{ player.name }}!</h4>
+            <br>
+            <h6>Hmmmm... Looks like you need some workout!</h6>
+            Here you can train your stats in exchange for gold. Unless you have some stat points... then it is free.
+        </div>
+        
+        <div style="margin-top: 90px">
+            {% if player.stat_point > 0 %}
+            <h5>Available stat points: <strong style="color: green">{{ player.stat_point }}</strong></h5>
+            {% else %}
+            <h5>No stat points available</h5>
+            {% endif %}
+        </div>
+        
+        <br>
+        <table style="width:600px; border: solid #ffd24d 1px;">
+              <tbody>
+                <tr style="border: solid #ffd24d 1px;">
+                    <td>Strength</td>
+                    <td style="font-size: 10px;">5 Strength equals +1 to damage</td>
+                    <td>{{ player.attack }}</td>
+                    {% if player.stat_point > 0 %}
+                    <td><a class="btn btn-success" href="/add/attack" role="button">+</a></td>
+                    {% else %}
+                    <td>{{ player.attack_cost }} <img src="https://findicons.com/files/icons/2250/payment_icon_set/64/gold_coin_stacks.png" width="20" height="20"></td>
+                    <td><a class="btn btn-success" href="/add/attack" role="button">+</a></td>
+                    {% endif %}
+                </tr>
+                <tr style="border: solid #ffd24d 1px;">
+                    <td>Dexterity</td>
+                    <td style="font-size: 10px;">Increases chance to hit enemy</td>
+                    <td>{{ player.dexterity }}</td>
+                    {% if player.stat_point > 0 %}
+                    <td><a class="btn btn-success" href="/add/dexterity" role="button">+</a></td>
+                    {% else %}
+                    <td>{{ player.dexterity_cost }} <img src="https://findicons.com/files/icons/2250/payment_icon_set/64/gold_coin_stacks.png" width="20" height="20"></td>
+                    <td><a class="btn btn-success" href="/add/dexterity" role="button">+</a></td>
+                    {% endif %}
+                </tr>
+                <tr style="border: solid #ffd24d 1px;">
+                    <td>Charisma</td>
+                    <td style="font-size: 10px;">Increases chance for critical damage</td>
+                    <td>{{ player.charisma }}</td>
+                    {% if player.stat_point > 0 %}
+                    <td><a class="btn btn-success" href="/add/attack" role="button">+</a></td>
+                    {% else %}
+                    <td>{{ player.attack_cost }} <img src="https://findicons.com/files/icons/2250/payment_icon_set/64/gold_coin_stacks.png" width="20" height="20"></td>
+                    <td><a class="btn btn-success" href="/add/charisma" role="button">+</a></td>
+                    {% endif %}
+                </tr>
+                <tr style="border: solid #ffd24d 1px;">
+                    <td>Vitality</td>
+                    <td style="font-size: 10px;">1 Vitality equals +10 HP</td>
+                    <td>{{ player.vitality }}</td>
+                    {% if player.stat_point > 0 %}
+                    <td><a class="btn btn-success" href="/add/vitality" role="button">+</a></td>
+                    {% else %}
+                    <td>{{ player.vitality_cost }} <img src="https://findicons.com/files/icons/2250/payment_icon_set/64/gold_coin_stacks.png" width="20" height="20"></td>
+                    <td><a class="btn btn-success" href="/add/vitality" role="button">+</a></td>
+                    {% endif %}
+                </tr>
+              </tbody>
+        </table>
+        <div style="margin-top: 10px; border: solid #ffd24d 1px; width: 140px">
+            <strong style="margin-left: 5px;">Gold: {{ player.gold }}</strong> <img src="https://findicons.com/files/icons/2250/payment_icon_set/64/gold_coin_stacks.png" width="20" height="20" style="margin-bottom: 4px;">
+        </div>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+body {
+    background-color: #212121;
+    color: white
+    }
+
+table, th, tr {
+    border:2px solid #ffd24d;
+    border-collapse: collapse;
+    height: 40px;
+    width: 168px;
+    text-align: center;
+}
+
+.link {
+    color:white;
+    text-decoration: none; 
+    background-color: none;
+}
+
+.stats {
+    border: none;
+}
+
+.inventory_item {
+    border: solid;
+    margin: 1px;
+    height: 100px;
+    width: 60px;
+    float: left;
+    margin-right: 10px;
+}
+
+#health::-webkit-progress-bar {background-color: #212121; width: 100%; height: 5px}
+#health {background-color: #212121;height: 5px}
+
+#health::-webkit-progress-value {background-color: red !important;height: 5px}
+#health::-moz-progress-bar {background-color: red !important;height: 5px}
+#health {color: red;}
+
+#exp::-webkit-progress-bar {background-color: #212121; width: 100%; height: 5px}
+#exp {background-color: #212121;height: 5px}
+
+#exp::-webkit-progress-value {background-color: gold !important;height: 5px}
+#exp::-moz-progress-bar {background-color: gold !important;height: 5px}
+#exp {color: gold;}
+
+#points_fight::-webkit-progress-bar {background-color: #212121; width: 100%; height: 5px}
+#points_fight {background-color: #212121;height: 5px}
+
+#points_fight::-webkit-progress-value {background-color: green !important;height: 5px}
+#points_fight::-moz-progress-bar {background-color: green !important;height: 5px}
+#points_fight {color: green;}

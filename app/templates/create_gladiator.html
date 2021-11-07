@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+    Create Gladiator
+{% endblock %}
+
+{% block content %}
+
+      <body class="text-center">
+        <div class="container">
+            <form method="POST" class="form-signin" style="color:white">
+                {{ form.hidden_tag() }}
+               
+                <h1 class="h3 mb-3 font-weight-normal" style="color: gold;">
+                    Create your Gladiator!
+                </h1>
+                <br>
+                {{ form.name.label() }}<br>
+                {{ form.name(placeholder="Name") }}<br><br>
+    
+                
+                <img src="https://s20-en.gladiatus.gameforge.com/game/9194/img/faces/gladiator_1_m.jpg">
+                <br>
+                <br>
+                {{ form.submit(class="btn btn-lg btn-block btn-warning") }}
+    
+            </form>
+        </div>
+    </body>
+
+{% endblock %}

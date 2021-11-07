@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Overview
+{% endblock %}
+
+{% block content %} 
+<div class="row" style="margin: 30px">
+    <div class="col-3">
+        <table>
+            <tr><th><a class="link" href='/overview'>Overview</a></th></tr>
+            <tr><th><a class="link" href="/expedition">Expedition</a></th></tr>
+            <tr><th><a class="link" href="/training">Training</a></th></tr>
+            <tr><th><a class="link" href="/blacksmith">Blacksmith</a></th></tr>
+            <tr><th><a class="link" href="/armor">Armour</a></th></tr>
+            <tr><th><a class="link" href="/potions">Potions</a></th></tr>
+        </table>
+    </div>
+    <div class="col-2">
+        <img src="{{ player.picture }}">
+            <table>
+                <tr>
+                    <th>{{ player.name }}</th>
+                </tr>
+                <tr>
+                    <td>Level <strong>{{ player.level }}</strong></td>
+                </tr>
+                <tr>
+                    <td>HP <strong>{{ player.hp }}/{{ player.max_hp }}</strong></td>
+                </tr>   
+                <tr>
+                    <td>Exp <strong>{{ player.experience }}/{{ player.max_experience }}</strong></td>
+                </tr>
+                <tr>
+                    <td>Strength <strong>{{ player.attack }}</strong></td>
+                </tr>     
+                <tr>
+                    <td>Dexterity <strong>{{ player.dexterity }}</strong></td>
+                </tr>
+                <tr>
+                    <td>Charisma <strong>{{ player.charisma }}</strong></td>
+                </tr>
+                <tr>
+                    <td>Vitality <strong>{{ player.vitality }}</strong></td>
+                </tr> 
+                <tr>
+                    <td>Armor <strong>{{ player.armor }}</strong></td>
+                </tr>
+                <tr>
+                    <td>Damage <strong>{{ player.attack }}</strong></td>
+                </tr> 
+            </table>
+    </div>
+    
+    <div class="col-4">
+        
+        <div style="margin-bottom: 20px;border: solid #ffd24d 1px; height: 300px; width: 369px;">
+            <div style="border: solid #ffd24d 1px; margin: 1px; height: 295.5px">
+                <div style="border: solid #ffd24d; height: 60px; width: 60px; margin-top: 10px; margin-left: 155px">
+                {% if equipped_helmet %}
+                {% include 'includes/equipped_helmet.html' %}
+                    <a data-toggle="modal" data-target="#Modal-EquippedHelmet-{{ equipped_helmet.id }}">
+                        <img src="{{ equipped_helmet.picture }}" height="55" width="55">
+                    </a> 
+                {% else %}
+                    <img src="https://icon-library.com/images/spartan-helmet-icon/spartan-helmet-icon-12.jpg" height="50" width="50" style="margin-top: 5px">
+                {% endif %}
+                </div>
+                <div style="border: solid #ffd24d; height: 60px; width: 60px; margin-top: 30px; margin-left: 155px">
+                {% if equipped_armor %}
+                {% include 'includes/equipped_armor.html' %}
+                    <a data-toggle="modal" data-target="#Modal-EquippedArmor-{{ equipped_armor.id }}">
+                        <img src="{{ equipped_armor.picture }}" height="55" width="55">
+                    </a>
+                {% else %}
+                    <img src="static/plastron.png" height="50" width="50" style="margin-left: 2px; margin-top: 2px;">
+                {% endif %}
+                </div>
+                <div style="border: solid #ffd24d; height: 60px; width: 60px; margin-top: 35px; margin-left: 155px">
+                {% if equipped_boots %}
+                {% include 'includes/equipped_boots.html' %}
+                <a data-toggle="modal" data-target="#Modal-EquippedBoots-{{ equipped_boots.id }}">
+                    <img src="{{ equipped_boots.picture }}" height="55" width="55">
+                </a> 
+                {% else %}
+                <img src="static/leg-armor.png" height="55" width="55">
+                {% endif %}
+                </div>
+                <div style="border: solid #ffd24d; height: 60px; width: 60px; margin-top: -156px; margin-left: 50px">
+                {% if equipped_weapon %}
+                {% include 'includes/equipped_weapon.html' %}
+                    <a data-toggle="modal" data-target="#Modal-EquippedWeapon-{{ equipped_weapon.id }}">
+                        <img src="{{ equipped_weapon.picture }}" height="55" width="55">
+                    </a>
+                {% else %}
+                    <img src="static/stiletto.png" height="50" width="50">
+                {% endif %}
+                </div>
+                <div style="border: solid #ffd24d; height: 60px; width: 60px; margin-top: -59px; margin-left: 260px">
+                {% if equipped_shield %}
+                {% include 'includes/equipped_shield.html' %}
+                    <a data-toggle="modal" data-target="#Modal-EquippedShield-{{ equipped_shield.id }}">
+                        <img src="{{ equipped_shield.picture }}" height="55" width="55">
+                    </a> 
+                {% else %}
+                    <img src="static/shield.png" height="50" width="50" style="margin-left: 2px; margin-top: 2px;">
+                {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div style="border: solid #ffd24d 1px; height: 186px; width: 369px;">
+            
+            {% for item in inventory %}
+            {% include 'includes/inventory_weapon.html' %}
+            {% include 'includes/inventory_armor.html' %}
+            {% include 'includes/inventory_shield.html' %}
+            {% include 'includes/inventory_helmet.html' %}
+            {% include 'includes/inventory_boots.html' %}
+            {% include 'includes/inventory_potion.html' %}
+                {% if item != '' %}
+                <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
+                    {% if item in weapons %}
+                        <a data-toggle="modal" data-target="#Modal-InventoryWeapon-{{ item.id }}">
+                            <img src="{{ item.picture }}" height="55" width="55">
+                        </a>
+                    {% elif item in shields %}
+                        <a data-toggle="modal" data-target="#Modal-InventoryShield-{{ item.id }}">
+                            <img src="{{ item.picture }}" height="55" width="55">
+                        </a>
+                    {% elif item in armors %}
+                        <a data-toggle="modal" data-target="#Modal-InventoryArmor-{{ item.id }}">
+                            <img src="{{ item.picture }}" height="55" width="55">
+                        </a>
+                    {% elif item in helmets %}
+                        <a data-toggle="modal" data-target="#Modal-InventoryHelmet-{{ item.id }}">
+                            <img src="{{ item.picture }}" height="55" width="55">
+                        </a>
+                    {% elif item in boots %}
+                        <a data-toggle="modal" data-target="#Modal-InventoryBoots-{{ item.id }}">
+                            <img src="{{ item.picture }}" height="55" width="55">
+                        </a>
+                    {% elif item in potions %}
+                        <a data-toggle="modal" data-target="#Modal-InventoryPotion-{{ item.id }}">
+                            <img src="{{ item.picture }}" height="55" width="55">
+                        </a>
+                    {% endif %}
+                </div>
+                {% else %}
+                <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
+
+                </div>
+                {% endif %}
+            {% endfor %}
+            
+        </div>
+        <div style="border: solid #ffd24d 1px; height: 28px; width: 160px; margin-top:1px">
+            <strong style="margin-left: 10px;">Gold: {{ player.gold }}</strong> <img src="https://findicons.com/files/icons/2250/payment_icon_set/64/gold_coin_stacks.png" width="20" height="20" style="margin-bottom: 2px;">
+        </div>
+        
+    </div>
+</div>
+{% endblock %}
