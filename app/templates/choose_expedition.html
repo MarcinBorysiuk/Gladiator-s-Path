@@ -10,23 +10,24 @@
             <tr><th><a class="link" href="/expedition">Expedition</a></th></tr>
             <tr><th><a class="link" href="/training">Training</a></th></tr>
             <tr><th><a class="link" href="/blacksmith">Blacksmith</a></th></tr>
-            <tr><th><a class="link" href="/armor">Armour</a></th></tr>
+            <tr><th><a class="link" href="/armor">Armorer</a></th></tr>
             <tr><th><a class="link" href="/potions">Potions</a></th></tr>
+            <tr><th><a class="link" href="/ranking">Ranking</a></th></tr>
         </table>
     </div>
-    <div class="col-6">
-        <div style="text-align: center; margin-right: 70px; margin-bottom: 50px;">
+    <div class="col-8">
+        <div style="text-align: center; margin-right: 150px; margin-bottom: 50px;">
             <h4>Ready to fight {{ player.name }}?</h4>
             Choose your expedition according to your level.
             Good luck!
         </div>
-        
+        <br>
         <div style="float: left; margin-right: 100px; text-align: center;">
             <p style="color: red;font-size: 20px ;margin-bottom: -5px;">Cursed Forest</p>
             Level 1-10
             <br>
             <a href="/expedition/1">
-                <img src="https://media.istockphoto.com/photos/path-in-dark-and-scary-forest-picture-id693058156?k=20&m=693058156&s=170667a&w=0&h=mgkfIWl5TPT7-Xtte8qOmekAIh7fkMrlXkXX1mEsmv4=" width="150" height="150" style="border: solid 1px #ffd24d;">
+                <img src="https://media.istockphoto.com/photos/path-in-dark-and-scary-forest-picture-id693058156?k=20&m=693058156&s=170667a&w=0&h=mgkfIWl5TPT7-Xtte8qOmekAIh7fkMrlXkXX1mEsmv4=" width="200" height="200" style="border: solid 1px #ffd24d;">
             </a>
         </div>
         <div style="float: left; margin-right: 100px; text-align: center;">
@@ -34,22 +35,22 @@
             Level 10-20
             <br>
             {% if player.level < 10 %}
-                <img src="static/misty_mountains.jpg" width="150" height="150" style="border: solid 1px #ffd24d;">
+                <img src="static/misty_mountains.jpg" width="200" height="200" style="border: solid 1px #ffd24d;">
             {% else %}
             <a href="/expedition/2">
-                <img src="static/misty_mountains.jpg" width="150" height="150" style="border: solid 1px #ffd24d;">
+                <img src="static/misty_mountains.jpg" width="200" height="200" style="border: solid 1px #ffd24d;">
             </a>
             {% endif %}
         </div>
-        <div style="margin-right: 55px; text-align: center;">
+        <div style="margin-right: 142px; text-align: center;">
             <p style="color: red;font-size: 20px ;margin-bottom: -5px;">Fire Temple</p>
             Level 20-30
             <br>
             {% if player.level < 20 %}
-                <img src="https://i.pinimg.com/originals/c5/06/75/c50675ff27a18fae5ff3e654c9a91e3d.jpg" width="150" height="150" style="border: solid 1px #ffd24d;">
+                <img src="https://i.pinimg.com/originals/c5/06/75/c50675ff27a18fae5ff3e654c9a91e3d.jpg" width="200" height="200" style="border: solid 1px #ffd24d;">
             {% else %}
                 <a href="/expedition/3">
-                    <img src="https://i.pinimg.com/originals/c5/06/75/c50675ff27a18fae5ff3e654c9a91e3d.jpg" width="150" height="150" style="border: solid 1px #ffd24d;">
+                    <img src="https://i.pinimg.com/originals/c5/06/75/c50675ff27a18fae5ff3e654c9a91e3d.jpg" width="200" height="200" style="border: solid 1px #ffd24d;">
                 </a>
             {% endif %}
         </div>

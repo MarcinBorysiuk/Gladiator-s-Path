@@ -14,7 +14,11 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title w-100 text-center" id="ModalLabel" >
-            {{ item.name }}
+            {% if item.level > 10 %}
+              <p style="color:lawngreen">{{ item.name }}</p>
+            {% else %}
+              <p>{{ item.name }}</p>
+            {% endif %}
           </h5>
         </div>
         <div class="modal-body w-100 text-center">
@@ -24,7 +28,10 @@
             <br>
             <p>Level {{ item.level }}</p>
             <p>Armor {{ item.armor }}</p>
-            <p>Cost {{ item.cost }}</p>
+            {% if item.vitality %}
+              <p style="color:lawngreen">Vitality +{{ item.vitality }}</p>
+            {% endif %}
+            <p>Cost {{ item.cost }} <img src="https://findicons.com/files/icons/2250/payment_icon_set/64/gold_coin_stacks.png" width="20" height="20" style="margin-bottom: 4px"></p>
           
         </div>
         <div class="modal-footer">

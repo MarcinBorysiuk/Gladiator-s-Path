@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Ranking
+{% endblock %} 
+
+{% block content %}
+
+<div class="row" style="margin: 30px">
+    <div class="col-3">
+        <table>
+            <tr><th><a class="link" href='/overview'>Overview</a></th></tr>
+            <tr><th><a class="link" href="/expedition">Expedition</a></th></tr>
+            <tr><th><a class="link" href="/training">Training</a></th></tr>
+            <tr><th><a class="link" href="/blacksmith">Blacksmith</a></th></tr>
+            <tr><th><a class="link" href="/armor">Armorer</a></th></tr>
+            <tr><th><a class="link" href="/potions">Potions</a></th></tr>
+            <tr><th><a class="link" href="/ranking">Ranking</a></th></tr>
+        </table>
+    </div>
+    <div class="col-7">
+    <h3>Server Ranking</h3>
+    <br>
+    
+    <table style="width:70%">
+        <thead>
+            <tr>
+                <th>Position in Ranking</th>
+                <th>Gladiator's Name</th>
+                <th>Gladiator's Level</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for gladiator in all_gladiators %}
+            <tr>
+                {% if loop.index == 1 %}
+                <td><img src="https://img.icons8.com/color/48/000000/crown.png"/></td>
+                <td><a href="/ranking/{{ gladiator.name }}"><strong>{{ gladiator.name }}</strong></a></td>
+                <td>{{ gladiator.level }}</td>
+                {% else %}
+                <td>{{ loop.index }}</td>
+                <td><a href="/ranking/{{ gladiator.name }}">{{ gladiator.name }}</a></td>
+                <td>{{ gladiator.level }}</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+        
+    </table>
+    </div>
+</div>
+{% endblock %}

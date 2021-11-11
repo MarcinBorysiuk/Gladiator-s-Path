@@ -14,7 +14,11 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title w-100 text-center" id="ModalLabel" >
-            {{ weapon.name }}
+            {% if weapon.level > 10 %}
+              <p style="color:lawngreen">{{ weapon.name }}</p>
+            {% else %}
+              <p>{{ weapon.name }}</p>
+            {% endif %}
           </h5>
         </div>
         <div class="modal-body w-100 text-center">
@@ -23,8 +27,11 @@
             </div>
             <br>
             <p>Level {{ weapon.level }}</p>
-            <p>Damage {{ weapon.damage }}</p>
-            <p>Cost {{ weapon.cost }}</p>
+            <p>Damage {{ weapon.min_dmg }}-{{ weapon.max_dmg }}</p>
+            {% if weapon.charisma %}
+              <p style="color:lawngreen">Charisma +{{ weapon.charisma }}</p>
+            {% endif %}
+            <p>Cost {{ weapon.cost }} <img src="https://findicons.com/files/icons/2250/payment_icon_set/64/gold_coin_stacks.png" width="20" height="20" style="margin-bottom: 4px"></p>
           
         </div>
         <div class="modal-footer">

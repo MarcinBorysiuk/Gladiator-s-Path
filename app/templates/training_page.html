@@ -10,8 +10,9 @@
             <tr><th><a class="link" href="/expedition">Expedition</a></th></tr>
             <tr><th><a class="link" href="/training">Training</a></th></tr>
             <tr><th><a class="link" href="/blacksmith">Blacksmith</a></th></tr>
-            <tr><th><a class="link" href="/armor">Armour</a></th></tr>
+            <tr><th><a class="link" href="/armor">Armorer</a></th></tr>
             <tr><th><a class="link" href="/potions">Potions</a></th></tr>
+            <tr><th><a class="link" href="/ranking">Ranking</a></th></tr>
         </table>
     </div>
     
@@ -38,17 +39,17 @@
                 <tr style="border: solid #ffd24d 1px;">
                     <td>Strength</td>
                     <td style="font-size: 10px;">5 Strength equals +1 to damage</td>
-                    <td>{{ player.attack }}</td>
+                    <td>{{ player.strength }}</td>
                     {% if player.stat_point > 0 %}
-                    <td><a class="btn btn-success" href="/add/attack" role="button">+</a></td>
+                    <td><a class="btn btn-success" href="/add/strength" role="button">+</a></td>
                     {% else %}
-                    <td>{{ player.attack_cost }} <img src="https://findicons.com/files/icons/2250/payment_icon_set/64/gold_coin_stacks.png" width="20" height="20"></td>
-                    <td><a class="btn btn-success" href="/add/attack" role="button">+</a></td>
+                    <td>{{ player.strength_cost }} <img src="https://findicons.com/files/icons/2250/payment_icon_set/64/gold_coin_stacks.png" width="20" height="20"></td>
+                    <td><a class="btn btn-success" href="/add/strength" role="button">+</a></td>
                     {% endif %}
                 </tr>
                 <tr style="border: solid #ffd24d 1px;">
                     <td>Dexterity</td>
-                    <td style="font-size: 10px;">Increases chance to hit enemy</td>
+                    <td style="font-size: 10px;">Increases chance to dodge a hit</td>
                     <td>{{ player.dexterity }}</td>
                     {% if player.stat_point > 0 %}
                     <td><a class="btn btn-success" href="/add/dexterity" role="button">+</a></td>
@@ -62,9 +63,9 @@
                     <td style="font-size: 10px;">Increases chance for critical damage</td>
                     <td>{{ player.charisma }}</td>
                     {% if player.stat_point > 0 %}
-                    <td><a class="btn btn-success" href="/add/attack" role="button">+</a></td>
+                    <td><a class="btn btn-success" href="/add/charisma" role="button">+</a></td>
                     {% else %}
-                    <td>{{ player.attack_cost }} <img src="https://findicons.com/files/icons/2250/payment_icon_set/64/gold_coin_stacks.png" width="20" height="20"></td>
+                    <td>{{ player.charisma_cost }} <img src="https://findicons.com/files/icons/2250/payment_icon_set/64/gold_coin_stacks.png" width="20" height="20"></td>
                     <td><a class="btn btn-success" href="/add/charisma" role="button">+</a></td>
                     {% endif %}
                 </tr>

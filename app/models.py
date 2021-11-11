@@ -38,17 +38,19 @@ class Player(db.Model):
     max_hp = db.Column(db.Integer)
     hp = db.Column(db.Integer)
     armor = db.Column(db.Integer)
-    attack = db.Column(db.Integer)
+    min_dmg = db.Column(db.Integer)
+    max_dmg = db.Column(db.Integer)
+    strength = db.Column(db.Integer)
     dexterity = db.Column(db.Integer)
     charisma = db.Column(db.Integer)
     vitality = db.Column(db.Integer)
-    attack_cost = db.Column(db.Integer, default=100)
+    strength_cost = db.Column(db.Integer, default=100)
     dexterity_cost = db.Column(db.Integer, default=100)
     charisma_cost = db.Column(db.Integer, default=100)
     vitality_cost = db.Column(db.Integer, default=100)
     stat_point = db.Column(db.Integer)
     expedition_points = db.Column(db.Integer)
-    dungeon_points = db.Column(db.Integer)
+    double_exp = db.Column(db.Integer, default=0)
     inventory_slots = db.Column(db.Integer, default=0)
     weapons = db.relationship('Weapon', backref='owner')
     armors = db.relationship('Armor', backref='owner')
@@ -66,20 +68,22 @@ class Player(db.Model):
         self.experience = 0
         self.max_experience = 10
         self.max_hp = 300
+        self.min_dmg = 1
+        self.max_dmg = 2
         self.hp = 300
         self.armor = 0
-        self.attack = 1
+        self.strength = 1
         self.dexterity = 1
         self.charisma = 1
         self.vitality = 1
-        self.attack_cost = 100
+        self.strength_cost = 100
         self.dexterity_cost = 100
         self.charisma_cost = 100
         self.vitality_cost = 100
         self.stat_point = 5
         self.expedition_points = 12
-        self.dungeon_points = 12
         self.inventory_slots = 0
+        self.double_exp = 0
         self.owner_id = owner_id
 
         db.session.commit()
@@ -104,7 +108,13 @@ class Player(db.Model):
             14:140,
             15:160,
             16:180,
-            17:200
+            17:200,
+            18:225,
+            19:250,
+            20:275,
+            21:300,
+            22:325,
+            23:350
 
         }
 
@@ -121,26 +131,57 @@ class Player(db.Model):
         elif self.max_experience == self.max_experience:
             self.level += 1
             self.experience = 0
+        
+        if self.level == 5:
+            self.picture = "https://s20-en.gladiatus.gameforge.com/game/9194/img/faces/gladiator_10_m.jpg"
+            flash("Your portrait changed!", category="success")
+        elif self.level == 10:
+            self.picture = "https://s20-en.gladiatus.gameforge.com/game/9194/img/faces/gladiator_20_m.jpg"
+            flash("Your portrait changed!", category="success")
+        elif self.level == 15:
+            self.picture = "https://s20-en.gladiatus.gameforge.com/game/9194/img/faces/gladiator_30_m.jpg"
+            flash("Your portrait changed!", category="success")
+        elif self.level == 20:
+            self.picture = "https://s20-en.gladiatus.gameforge.com/game/9194/img/faces/gladiator_40_m.jpg"
+            flash("Your portrait changed!", category="success")
+        elif self.level == 25:
+            self.picture = "https://s20-en.gladiatus.gameforge.com/game/9194/img/faces/gladiator_50_m.jpg"
+            flash("Your portrait changed!", category="success")
+        elif self.level == 30:
+            self.picture = "https://s20-en.gladiatus.gameforge.com/game/9194/img/faces/gladiator_60_m.jpg"
+            flash("Your portrait changed!", category="success")
+        elif self.level == 35:
+            self.picture = "https://s20-en.gladiatus.gameforge.com/game/9194/img/faces/gladiator_70_m.jpg"
+            flash("Your portrait changed!", category="success")
+        elif self.level == 40:
+            self.picture =="https://s20-en.gladiatus.gameforge.com/game/9194/img/faces/gladiator_80_m.jpg"
+            flash("Your portrait changed!", category="success")
             
+        self.max_hp += 25
         self.hp = self.max_hp
         self.expedition_points = 12
-        self.dungeon_points = 12
         self.stat_point += 5
         db.session.commit()
 
 
     def train_stats(self, stat):
-        if stat == 'attack':
+        if stat == 'strength':
             if self.stat_point > 0:
-                self.attack += 1
+                self.strength += 1
                 self.stat_point -= 1
+                if self.strength % 5 == 0:
+                    self.min_dmg += 1
+                    self.max_dmg += 1
                 db.session.commit()
                 flash("Added 1 Strength", category='success')
             else:
-                if self.gold >= self.attack_cost:
-                    self.gold -= self.attack_cost
-                    self.attack += 1
-                    self.attack_cost += 100
+                if self.gold >= self.strength_cost:
+                    self.gold -= self.strength_cost
+                    self.strength += 1
+                    self.strength_cost += 100
+                    if self.strength % 5 == 0:
+                        self.min_dmg += 1
+                        self.max_dmg += 1
                     db.session.commit()
                     flash("Added 1 Strength", category='success')
                 else:
@@ -194,12 +235,15 @@ class Player(db.Model):
                     flash("Not enough Gold!", category='danger')
 
 
+
 class Weapon(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
     picture = db.Column(db.String, nullable=False)
     level = db.Column(db.Integer, nullable=False)
-    damage = db.Column(db.Integer, nullable=False)
+    min_dmg = db.Column(db.Integer)
+    max_dmg = db.Column(db.Integer)
+    charisma = db.Column(db.Integer)
     cost = db.Column(db.Integer)
     is_equipped = db.Column(db.Boolean, default=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('player.id'))
@@ -212,6 +256,7 @@ class Armor(db.Model):
     picture = db.Column(db.String, nullable=False)
     level = db.Column(db.Integer, nullable=False)
     armor = db.Column(db.Integer, nullable=False)
+    vitality = db.Column(db.Integer)
     cost = db.Column(db.Integer, nullable=False)
     is_equipped = db.Column(db.Boolean, default=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('player.id'))
@@ -223,6 +268,7 @@ class Shield(db.Model):
     picture = db.Column(db.String, nullable=False)
     level = db.Column(db.Integer, nullable=False)
     armor = db.Column(db.Integer, nullable=False)
+    charisma = db.Column(db.Integer)
     cost = db.Column(db.Integer, nullable=False)
     is_equipped = db.Column(db.Boolean, default=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('player.id'))
@@ -235,6 +281,7 @@ class Boots(db.Model):
     picture = db.Column(db.String, nullable=False)
     level = db.Column(db.Integer, nullable=False)
     armor = db.Column(db.Integer, nullable=False)
+    dexterity = db.Column(db.Integer)
     cost = db.Column(db.Integer, nullable=False)
     is_equipped = db.Column(db.Boolean, default=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('player.id'))
@@ -246,6 +293,7 @@ class Helmet(db.Model):
     picture = db.Column(db.String, nullable=False)
     level = db.Column(db.Integer, nullable=False)
     armor = db.Column(db.Integer, nullable=False)
+    vitality = db.Column(db.Integer)
     cost = db.Column(db.Integer, nullable=False)
     is_equipped = db.Column(db.Boolean, default=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('player.id'))
@@ -259,9 +307,9 @@ class Potion(db.Model):
     level = db.Column(db.Integer, nullable=False)
     heal = db.Column(db.Integer, nullable=False)
     cost = db.Column(db.Integer, nullable=False)
+    description = db.Column(db.String(30))
     used = db.Column(db.Boolean, default=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('player.id'))
-
 
 
 class Enemy(db.Model):
@@ -270,5 +318,6 @@ class Enemy(db.Model):
     picture = db.Column(db.String, nullable=False)
     level = db.Column(db.Integer, nullable=False)
     hp = db.Column(db.Integer)
-    attack = db.Column(db.Integer)
+    min_dmg = db.Column(db.Integer)
+    max_dmg = db.Column(db.Integer)
     dexterity = db.Column(db.Integer)

@@ -12,14 +12,15 @@ Fight Page
             <tr><th><a class="link" href="/expedition">Expedition</a></th></tr>
             <tr><th><a class="link" href="/training">Training</a></th></tr>
             <tr><th><a class="link" href="/blacksmith">Blacksmith</a></th></tr>
-            <tr><th><a class="link" href="/armor">Armour</a></th></tr>
+            <tr><th><a class="link" href="/armor">Armorer</a></th></tr>
             <tr><th><a class="link" href="/potions">Potions</a></th></tr>
+            <tr><th><a class="link" href="/ranking">Ranking</a></th></tr>
         </table>
     </div>
     <div class="col-6">
         {% if player.hp > 0 %}
             <h3 style="text-align: center; background-color: green; border: solid; color: #ffd24d; padding: 5px">{{ win_statement }}</h2>
-            <h4 style="text-align: center; background-color: green; border: solid; color: #ffd24d; padding: 5px">{{ reward }}&nbsp<img src="https://findicons.com/files/icons/2250/payment_icon_set/64/gold_coin_stacks.png" width="20" height="20"></h3>
+            <h4 style="text-align: center; background-color: green; border: solid; color: #ffd24d; padding: 5px">{{ reward }}&nbsp<img src="https://findicons.com/files/icons/2250/payment_icon_set/64/gold_coin_stacks.png" width="20" height="20" style="margin-bottom: 5px;"></h3>
         {% elif player.hp <= 0 and enemy_to_fight.hp <= 0 %}
             <h3 style="text-align: center; background-color: green; border: solid; color: #ffd24d; padding: 5px">Draw</h2>
         {% else %}
@@ -51,10 +52,10 @@ Fight Page
                 </table>
             </div>
         </div>
-        <div style="float: left; margin-top: 40px; margin-left: 200px;">
+        <div style="float: left; margin-top: 40px; border: solid 1px #ffd24d; margin-left:110px; width:500px; padding:10px">
             <h5 style="text-align: center;">History of Fight</h5>
             {% for record in history_of_fight %}
-                <p style="font-size: 14px; margin-bottom: 2px;;"><strong>{{ record }}</strong></p>
+                <p style="font-size: 14px; margin-bottom: 2px;"><strong>{{ record }}</strong></p>
             {% endfor %}
         </div>
         

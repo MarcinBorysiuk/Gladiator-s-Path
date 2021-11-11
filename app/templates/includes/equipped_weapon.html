@@ -13,7 +13,11 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title w-100 text-center" id="ModalLabel" >
-            {{ equipped_weapon.name }}
+            {% if equipped_weapon.level > 10 %}
+              <p style="color:lawngreen">{{ equipped_weapon.name }}</p>
+            {% else %}
+              <p>{{ equipped_weapon.name }}</p>
+            {% endif %}
           </h5>
         </div>
         <div class="modal-body w-100 text-center">
@@ -22,14 +26,20 @@
             </div>
             <br>
             <p>Level {{ equipped_weapon.level }}</p>
-            <p>Damage {{ equipped_weapon.damage }}</p>
-            <p>Cost {{ equipped_weapon.cost }}</p>
+            <p>Damage {{ equipped_weapon.min_dmg }}-{{ equipped_weapon.max_dmg }}</p>
+            {% if equipped_weapon.charisma %}
+              <p style="color:lawngreen">Charisma +{{ equipped_weapon.charisma }}</p>
+            {% endif %}
+            <p>Cost {{ equipped_weapon.cost }} <img src="https://findicons.com/files/icons/2250/payment_icon_set/64/gold_coin_stacks.png" width="20" height="20" style="margin-bottom: 4px"></p>
           
         </div>
         <div class="modal-footer">
+          {% if current_user.gladiator[0] == equipped_weapon.owner %}
           <form action="/take_off/weapon/{{ equipped_weapon.id }}">
             <button type="submit" class="btn btn-warning" style="margin-right: 40px;">Take Off</button>
           </form>
+          {% else %}
+          {% endif %}
         </div>
       </div>
     </div>
