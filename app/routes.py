@@ -4,8 +4,12 @@ from app import app, db
 from app.models import *
 from app.forms import *
 from app.game_logic import *
+from app.data_manager import DataManagement
+from app.helpers import make_equipment
 from flask_login import login_user, logout_user, login_required
 
+
+data_managment = DataManagement(db)
 
 
 @app.route('/')
@@ -17,16 +21,9 @@ def home_page():
 def register_page():
     form = RegisterForm()
     if form.validate_on_submit():
-        user_to_create = User(
-            name=form.username.data,
-            email_address=form.email_address.data,
-            password=form.password1.data
-        )
 
-        db.session.add(user_to_create)
-        db.session.commit()
-
-        
+        data_managment.create_user(form.username.data,form.email_address.data,form.password1.data)
+        user_to_create = data_managment.filter_user_by_name(form.username.data)
         return redirect(f'create_gladiator/{user_to_create.name}')
     
     if form.errors != {}:
@@ -38,19 +35,15 @@ def register_page():
 
 @app.route('/create_gladiator/<string:username>', methods=["GET", "POST"])
 def create_gladiator(username):
-    user = User.query.filter_by(name=username).first()
+    user = data_managment.filter_user_by_name(username)
     form = CreateGladiatorForm()
     if form.validate_on_submit():
-        name = form.name.data
         
-        new_gladiator = Player()
-        new_gladiator.create_new(name=name, owner_id=user.id)
-        db.session.add(new_gladiator)
-        db.session.commit()
+        data_managment.create_gladiator(form.name.data, id=user.id)
+
         login_user(user)
         flash(f"Account created successfully! You are now logged in as {user.name}", category="success")
-        flash(f"{new_gladiator.name} created successfully! Welcome to the game!", category="success")
-        flash(f"You have 5 stat points available. Go to training", category='success')
+        flash(f"Welcome to the game! You have 5 stat points available. Go to training", category='success')
         return redirect(url_for('overview'))
 
     if form.errors != {}:
@@ -65,7 +58,7 @@ def login_page():
     form = LoginForm()
 
     if form.validate_on_submit():
-        attempted_user = User.query.filter_by(name=form.username.data).first()
+        attempted_user = data_managment.filter_user_by_name(form.username.data)
         if attempted_user and attempted_user.check_password_correction(
             attempted_password=form.password.data
     ):
@@ -99,54 +92,12 @@ def overview():
     boots = player.boots
     potions = player.potions
     items = weapons + armors + shields + helmets + boots + potions
-    equipped_weapon = []
-    equipped_armor = []
-    equipped_shield = []
-    equipped_helmet = []
-    equipped_boots = []
+    equipped_weapon = make_equipment(items, Weapon)
+    equipped_armor = make_equipment(items, Armor)
+    equipped_shield = make_equipment(items, Shield)
+    equipped_helmet = make_equipment(items, Helmet)
+    equipped_boots = make_equipment(items, Boots)
     
-    
-    for item in items:
-        if isinstance(item, Weapon):
-            if item.is_equipped == True:
-                equipped_weapon.append(item)
-                items.remove(item)
-
-    for item in items:
-        if isinstance(item, Armor):
-            if item.is_equipped == True:
-                equipped_armor.append(item)
-                items.remove(item)
-
-    for item in items:
-        if isinstance(item, Shield):
-            if item.is_equipped == True:
-                equipped_shield.append(item)
-                items.remove(item)
-
-    for item in items:
-        if isinstance(item, Helmet):
-            if item.is_equipped == True:
-                equipped_helmet.append(item)
-                items.remove(item)
-
-    for item in items:
-        if isinstance(item, Boots):
-            if item.is_equipped == True:
-                equipped_boots.append(item)
-                items.remove(item)
-
-    if equipped_weapon:
-        equipped_weapon = equipped_weapon[0]
-    if equipped_armor:
-        equipped_armor = equipped_armor[0]
-    if equipped_shield:
-        equipped_shield = equipped_shield[0]
-    if equipped_helmet:
-        equipped_helmet = equipped_helmet[0]
-    if equipped_boots:
-        equipped_boots = equipped_boots[0]
-
     if not items:
         inventory = empty_inventory
     else:
@@ -205,11 +156,11 @@ def choose_enemy(id):
     user = flask_login.current_user
     player = user.gladiator[0]
     if id == 1:
-        enemies = Enemy.query.all()[:4]
+        enemies = data_managment.query_enemies(0, 4)
     if id == 2:
-        enemies = Enemy.query.all()[4:8]
+        enemies = data_managment.query_enemies(4, 8)
     if id == 3:
-        enemies = Enemy.query.all()[8:12]
+        enemies = data_managment.query_enemies(8, 12)
 
     return render_template('enemy_page.html', player=player, enemies=enemies, id=id)
 
@@ -221,7 +172,7 @@ def fight(id):
     
     user = flask_login.current_user
     player = user.gladiator[0]
-    enemy_to_fight = Enemy.query.filter_by(id=id).first()
+    enemy_to_fight = data_managment.filter_enemy_by_id(id)
 
     if player.expedition_points == 0:
         flash("You don't have any expedition points!", category='danger')
@@ -264,7 +215,7 @@ def fight(id):
 @login_required
 def blacksmith():
 
-    blacksmith_weapons = Weapon.query.all()
+    blacksmith_weapons = data_managment.query_all_weapons()
     weapons_in_store = []
     for weapon in blacksmith_weapons:
         if weapon.owner == None:
@@ -312,10 +263,10 @@ def blacksmith():
 def armorer():
 
     armorer_items = []
-    armorer_shields = Shield.query.all()
-    armorer_armors = Armor.query.all()
-    armorer_helmets = Helmet.query.all()
-    armorer_boots = Boots.query.all()
+    armorer_shields = data_managment.query_all_shields()
+    armorer_armors = data_managment.query_all_armors()
+    armorer_helmets = data_managment.query_all_helmets()
+    armorer_boots = data_managment.query_all_boots()
     items = armorer_armors + armorer_shields + armorer_helmets + armorer_boots
 
     for item in items:
@@ -367,7 +318,7 @@ def armorer():
 @app.route('/potions')
 @login_required
 def potions():
-    potion_master_potions = Potion.query.all()
+    potion_master_potions = data_managment.query_all_potions()
     potion_in_store = []
     for potion in potion_master_potions:
         if potion.owner == None and potion.heal != 0:
@@ -376,7 +327,7 @@ def potions():
     potion_master_potions = potion_in_store
     potion_master_potions = sorted(potion_master_potions, key=lambda potion: potion.level)
 
-    for potion in Potion.query.all():
+    for potion in data_managment.query_all_potions():
         if potion.description:
             potion_master_potions.append(potion)
 
@@ -418,7 +369,7 @@ def potions():
 def buy_weapon(item_id):
     user = flask_login.current_user
     player = user.gladiator[0]
-    weapon_to_buy = Weapon.query.filter_by(id=item_id).first()
+    weapon_to_buy = data_managment.filter_weapon_by_id(item_id)
     if request.method == "POST":
         if player.inventory_slots == 18:
             flash("Your Inventory is full!", category='danger')
@@ -461,7 +412,7 @@ def buy_weapon(item_id):
 def buy_armor(item_id):
     user = flask_login.current_user
     player = user.gladiator[0]
-    armor_to_buy = Armor.query.filter_by(id=item_id).first()
+    armor_to_buy = data_managment.filter_armor_by_id(item_id)
     if request.method == "POST":
         if player.inventory_slots == 18:
             flash("Your Inventory is full!", category='danger')
@@ -502,7 +453,7 @@ def buy_armor(item_id):
 def buy_shield(item_id):
     user = flask_login.current_user
     player = user.gladiator[0]
-    shield_to_buy = Shield.query.filter_by(id=item_id).first()
+    shield_to_buy = data_managment.filter_shield_by_id(item_id)
     if request.method == "POST":
         if player.inventory_slots == 18:
             flash("Your Inventory is full!", category='danger')
@@ -543,7 +494,7 @@ def buy_shield(item_id):
 def buy_helmet(item_id):
     user = flask_login.current_user
     player = user.gladiator[0]
-    helmet_to_buy = Helmet.query.filter_by(id=item_id).first()
+    helmet_to_buy = data_managment.filter_helmet_by_id(item_id)
     if request.method == "POST":
         if player.inventory_slots == 18:
             flash("Your Inventory is full!", category='danger')
@@ -583,7 +534,7 @@ def buy_helmet(item_id):
 def buy_boots(item_id):
     user = flask_login.current_user
     player = user.gladiator[0]
-    boots_to_buy = Boots.query.filter_by(id=item_id).first()
+    boots_to_buy = data_managment.filter_boots_by_id(item_id)
     if request.method == "POST":
         if player.inventory_slots == 18:
             flash("Your Inventory is full!", category='danger')
@@ -625,7 +576,7 @@ def buy_boots(item_id):
 def buy_potion(item_id):
     user = flask_login.current_user
     player = user.gladiator[0]
-    potion_to_buy = Potion.query.filter_by(id=item_id).first()
+    potion_to_buy = data_managment.filter_potion_by_id(item_id)
     if request.method == "POST":
         if player.inventory_slots == 18:
             flash("Your Inventory is full!", category='danger')
@@ -666,7 +617,7 @@ def buy_potion(item_id):
 def use_potion(item_id):
     user = flask_login.current_user
     player = user.gladiator[0]
-    potion = Potion.query.get(item_id)
+    potion = data_managment.filter_potion_by_id(item_id)
 
     if potion.name == "HP Potion":
         heal = player.max_hp // 2
@@ -702,7 +653,7 @@ def use_potion(item_id):
 def sell_potion(item_id):
     user = flask_login.current_user
     player = user.gladiator[0]
-    potion_to_sell = Potion.query.filter_by(id=item_id).first()
+    potion_to_sell = data_managment.filter_potion_by_id(item_id)
     player.gold += potion_to_sell.cost
     player.inventory_slots -= 1
     db.session.delete(potion_to_sell)
@@ -717,7 +668,7 @@ def sell_potion(item_id):
 def sell_weapon(item_id):
     user = flask_login.current_user
     player = user.gladiator[0]
-    weapon_to_sell = Weapon.query.filter_by(id=item_id).first()
+    weapon_to_sell = data_managment.filter_weapon_by_id(item_id)
     player.gold += weapon_to_sell.cost
     player.inventory_slots -= 1
     db.session.delete(weapon_to_sell)
@@ -731,7 +682,7 @@ def sell_weapon(item_id):
 def sell_armor(item_id):
     user = flask_login.current_user
     player = user.gladiator[0]
-    armor_to_sell = Armor.query.filter_by(id=item_id).first()
+    armor_to_sell = data_managment.filter_armor_by_id(item_id)
     player.gold += armor_to_sell.cost
     player.inventory_slots -= 1
     db.session.delete(armor_to_sell)
@@ -744,7 +695,7 @@ def sell_armor(item_id):
 def sell_shield(item_id):
     user = flask_login.current_user
     player = user.gladiator[0]
-    shield_to_sell = Shield.query.filter_by(id=item_id).first()
+    shield_to_sell = data_managment.filter_shield_by_id(item_id)
     player.gold += shield_to_sell.cost
     player.inventory_slots -= 1
     db.session.delete(shield_to_sell)
@@ -757,7 +708,7 @@ def sell_shield(item_id):
 def sell_helmet(item_id):
     user = flask_login.current_user
     player = user.gladiator[0]
-    helmet_to_sell = Helmet.query.filter_by(id=item_id).first()
+    helmet_to_sell = data_managment.filter_helmet_by_id(item_id)
     player.gold += helmet_to_sell.cost
     player.inventory_slots -= 1
     db.session.delete(helmet_to_sell)
@@ -770,7 +721,7 @@ def sell_helmet(item_id):
 def sell_boots(item_id):
     user = flask_login.current_user
     player = user.gladiator[0]
-    boots_to_sell = Boots.query.filter_by(id=item_id).first()
+    boots_to_sell = data_managment.filter_boots_by_id(item_id)
     player.gold += boots_to_sell.cost
     player.inventory_slots -= 1
     db.session.delete(boots_to_sell)
@@ -788,7 +739,7 @@ def equip_weapon(item_id):
     equipped_weapons = [weapon for weapon in weapons if weapon.is_equipped == True]
     
     if len(equipped_weapons) == 0:
-        weapon_to_equip = Weapon.query.filter_by(id=item_id).first()
+        weapon_to_equip = data_managment.filter_weapon_by_id(item_id)
         weapon_to_equip.is_equipped = True
         player.min_dmg += weapon_to_equip.min_dmg
         player.max_dmg += weapon_to_equip.max_dmg
@@ -806,7 +757,7 @@ def equip_weapon(item_id):
         if equipped_weapon.charisma:
             player.charisma -= equipped_weapon.charisma
 
-        weapon_to_equip = Weapon.query.filter_by(id=item_id).first()
+        weapon_to_equip = data_managment.filter_weapon_by_id(item_id)
         weapon_to_equip.is_equipped = True
         player.min_dmg += weapon_to_equip.min_dmg
         player.max_dmg += weapon_to_equip.max_dmg
@@ -827,7 +778,7 @@ def equip_armor(item_id):
     equipped_armors = [armor for armor in armors if armor.is_equipped == True]
     
     if len(equipped_armors) == 0:
-        armor_to_equip = Armor.query.filter_by(id=item_id).first()
+        armor_to_equip = data_managment.filter_armor_by_id(item_id)
         armor_to_equip.is_equipped = True
         player.armor += armor_to_equip.armor
         if armor_to_equip.vitality:
@@ -847,7 +798,7 @@ def equip_armor(item_id):
             player.hp -= equipped_armor.vitality * 10
             player.max_hp -= equipped_armor.vitality * 10
 
-        armor_to_equip = Armor.query.filter_by(id=item_id).first()
+        armor_to_equip = data_managment.filter_armor_by_id(item_id)
         armor_to_equip.is_equipped = True
         player.armor += armor_to_equip.armor
         if armor_to_equip.vitality:
@@ -868,7 +819,7 @@ def equip_shield(item_id):
     equipped_shields = [shield for shield in shields if shield.is_equipped == True]
     
     if len(equipped_shields) == 0:
-        shield_to_equip = Shield.query.filter_by(id=item_id).first()
+        shield_to_equip = data_managment.filter_shield_by_id(item_id)
         shield_to_equip.is_equipped = True
         player.armor += shield_to_equip.armor
         if shield_to_equip.charisma:
@@ -884,7 +835,7 @@ def equip_shield(item_id):
         if equipped_shield.charisma:
             player.charisma -= equipped_shield.charisma
 
-        shield_to_equip = Shield.query.filter_by(id=item_id).first()
+        shield_to_equip = data_managment.filter_shield_by_id(item_id)
         shield_to_equip.is_equipped = True
         player.armor += shield_to_equip.armor
         if shield_to_equip.charisma:
@@ -903,7 +854,7 @@ def equip_helmet(item_id):
     equipped_helmets = [helmet for helmet in helmets if helmet.is_equipped == True]
     
     if len(equipped_helmets) == 0:
-        helmet_to_equip = Helmet.query.filter_by(id=item_id).first()
+        helmet_to_equip = data_managment.filter_helmet_by_id(item_id)
         helmet_to_equip.is_equipped = True
         player.armor += helmet_to_equip.armor
         if helmet_to_equip.vitality:
@@ -923,7 +874,7 @@ def equip_helmet(item_id):
             player.hp -= equipped_helmet.vitality * 10
             player.max_hp -= equipped_helmet.vitality * 10
 
-        helmet_to_equip = Helmet.query.filter_by(id=item_id).first()
+        helmet_to_equip = data_managment.filter_helmet_by_id(item_id)
         helmet_to_equip.is_equipped = True
         player.armor += helmet_to_equip.armor
         if helmet_to_equip.vitality:
@@ -944,7 +895,7 @@ def equip_boots(item_id):
     equipped_boots = [boot for boot in boots if boot.is_equipped == True]
     
     if len(equipped_boots) == 0:
-        boots_to_equip = Boots.query.filter_by(id=item_id).first()
+        boots_to_equip = data_managment.filter_boots_by_id(item_id)
         boots_to_equip.is_equipped = True
         player.armor += boots_to_equip.armor
         if boots_to_equip.dexterity:
@@ -960,7 +911,7 @@ def equip_boots(item_id):
         if equipped_boot.dexterity:
             player.dexterity -= equipped_boot.dexterity
 
-        boots_to_equip = Boots.query.filter_by(id=item_id).first()
+        boots_to_equip = data_managment.filter_boots_by_id(item_id)
         boots_to_equip.is_equipped = True
         player.armor += boots_to_equip.armor
         if boots_to_equip.dexterity:
@@ -977,7 +928,7 @@ def take_off_weapon(item_id):
     if player.inventory_slots == 18:
         flash("Your Inventory is full!", category='danger')
         return redirect(url_for('overview'))
-    weapon_to_take_off = Weapon.query.filter_by(id=item_id).first()
+    weapon_to_take_off = data_managment.filter_weapon_by_id(item_id)
     weapon_to_take_off.is_equipped = False
     player.min_dmg -= weapon_to_take_off.min_dmg
     player.max_dmg -= weapon_to_take_off.max_dmg
@@ -996,7 +947,7 @@ def take_off_armor(item_id):
     if player.inventory_slots == 18:
         flash("Your Inventory is full!", category='danger')
         return redirect(url_for('overview'))
-    armor_to_take_off = Armor.query.filter_by(id=item_id).first()
+    armor_to_take_off = data_managment.filter_armor_by_id(item_id)
     armor_to_take_off.is_equipped = False
     player.armor -= armor_to_take_off.armor
     if armor_to_take_off.vitality:
@@ -1016,7 +967,7 @@ def take_off_shield(item_id):
     if player.inventory_slots == 18:
         flash("Your Inventory is full!", category='danger')
         return redirect(url_for('overview'))
-    shield_to_take_off = Shield.query.filter_by(id=item_id).first()
+    shield_to_take_off = data_managment.filter_shield_by_id(item_id)
     shield_to_take_off.is_equipped = False
     player.armor -= shield_to_take_off.armor
     if shield_to_take_off.charisma:
@@ -1033,7 +984,7 @@ def take_off_helmet(item_id):
     if player.inventory_slots == 18:
         flash("Your Inventory is full!", category='danger')
         return redirect(url_for('overview'))
-    helmet_to_take_off = Helmet.query.filter_by(id=item_id).first()
+    helmet_to_take_off = data_managment.filter_helmet_by_id(item_id)
     helmet_to_take_off.is_equipped = False
     player.armor -= helmet_to_take_off.armor
     if helmet_to_take_off.vitality:
@@ -1052,7 +1003,7 @@ def take_off_boots(item_id):
     if player.inventory_slots == 18:
         flash("Your Inventory is full!", category='danger')
         return redirect(url_for('overview'))
-    boots_to_take_off = Boots.query.filter_by(id=item_id).first()
+    boots_to_take_off = data_managment.filter_boots_by_id(item_id)
     boots_to_take_off.is_equipped = False
     player.armor -= boots_to_take_off.armor
     if boots_to_take_off.dexterity:
@@ -1063,7 +1014,7 @@ def take_off_boots(item_id):
 
 @app.route('/ranking')
 def ranking():
-    all_gladiators = Player.query.all()
+    all_gladiators = data_managment.query_all_gladiators()
     all_gladiators = sorted(all_gladiators, key=lambda player: player.level)
     all_gladiators = all_gladiators[::-1]
     return render_template('ranking_page.html', all_gladiators=all_gladiators)
@@ -1071,7 +1022,7 @@ def ranking():
 
 @app.route('/ranking/<string:name>')
 def ranking_gladiator(name):
-    gladiator_to_see = Player.query.filter_by(name=name).first()
+    gladiator_to_see = data_managment.filter_gladiator_by_name(name)
     equipped_weapon = [weapon for weapon in gladiator_to_see.weapons if weapon.is_equipped == True]
     equipped_armor = [armor for armor in gladiator_to_see.armors if armor.is_equipped == True]
     equipped_shield = [shield for shield in gladiator_to_see.shields if shield.is_equipped == True]
