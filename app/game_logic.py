@@ -1,7 +1,3 @@
-
-from flask import flash
-from flask.helpers import url_for
-from werkzeug.utils import redirect
 from app import db
 import random
 
@@ -51,9 +47,6 @@ def player_deal_critical(player):
     return random.randint(1, 120) <= player.charisma
 
 
-
-
-
 def get_reward(enemy, player):
     easy = random.randint(1,2)
     medium = random.randint(2,3)
@@ -82,8 +75,6 @@ def get_reward(enemy, player):
             return (hard, hard_gold)
         else:
             return (very_hard, very_hard_gold)
-
-
 
 def fight_enemy(player, enemy):
 
