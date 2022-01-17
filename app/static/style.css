@@ -27,6 +27,16 @@ body {
     justify-self: center;
 }
 
+.grid__col8 {
+    grid-column: span 8;
+    justify-self: center;
+}
+
+.grid__col10 {
+    grid-column: span 10;
+    justify-self: center;
+}
+
 .grid__col12 {
     grid-column: span 12;
     justify-self: center;
@@ -52,7 +62,20 @@ body {
         grid-column: span 6;
         justify-self: center;
     }
+
+    .grid__colsm8 {
+        grid-column: span 8;
+        justify-self: center;
+    }
+
+    .grid__colsm10 {
+        grid-column: span 10;
+        justify-self: center;
+    }
 }
+
+
+
 
 table, th, tr {
     border:2px solid #ffd24d;
