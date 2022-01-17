@@ -12,6 +12,10 @@ body {
     grid-gap: 10px;
 }
 
+.grid--gap20 {
+    grid-gap: 20px;
+}
+
 .grid__col3 {
     grid-column: span 3;
     justify-self: center;
@@ -42,7 +46,17 @@ body {
     justify-self: center;
 }
 
+.table_sm {
+    width:400px; 
+    border: solid #ffd24d 1px;
+}
+
 @media (min-width: 768px) {
+    .grid__colsm1 {
+        grid-column: span 1;
+        justify-self: center;
+    }
+
     .grid__colsm2 {
         grid-column: span 2;
         justify-self: center;
@@ -72,8 +86,17 @@ body {
         grid-column: span 10;
         justify-self: center;
     }
-}
 
+    .grid__colsm12 {
+        grid-column: span 12;
+        justify-self: center;
+    }
+
+    .table_lg {
+        width:600px; 
+        border: solid #ffd24d 1px;
+    }
+}
 
 
 
