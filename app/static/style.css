@@ -3,6 +3,41 @@ body {
     color: white
     }
 
+.grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+}
+
+.grid--gap10 {
+    grid-gap: 10px;
+}
+
+.grid__col3 {
+    grid-column: span 3;
+}
+
+.grid__col4 {
+    grid-column: span 4;
+}
+
+.grid__col6 {
+    grid-column: span 6;
+}
+
+.grid__col12 {
+    grid-column: span 12;
+}
+
+@media (min-width: 768px) {
+    .grid__colsm6 {
+        grid-column: span 6;
+    }
+
+    .grid__colsm3 {
+        grid-column: span 3;
+    }
+}
+
 table, th, tr {
     border:2px solid #ffd24d;
     border-collapse: collapse;
