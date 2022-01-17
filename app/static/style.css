@@ -31,6 +31,12 @@ body {
     justify-self: center;
 }
 
+.grid__col6_training {
+    grid-column: span 6;
+    margin-top: 40px;
+    justify-self: center;
+}
+
 .grid__col8 {
     grid-column: span 8;
     justify-self: center;
