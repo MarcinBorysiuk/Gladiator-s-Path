@@ -14,27 +14,43 @@ body {
 
 .grid__col3 {
     grid-column: span 3;
+    justify-self: center;
 }
 
 .grid__col4 {
     grid-column: span 4;
+    justify-self: center;
 }
 
 .grid__col6 {
     grid-column: span 6;
+    justify-self: center;
 }
 
 .grid__col12 {
     grid-column: span 12;
+    justify-self: center;
 }
 
 @media (min-width: 768px) {
-    .grid__colsm6 {
-        grid-column: span 6;
+    .grid__colsm2 {
+        grid-column: span 2;
+        justify-self: center;
     }
 
     .grid__colsm3 {
         grid-column: span 3;
+        justify-self: center;
+    }
+
+    .grid__colsm4 {
+        grid-column: span 4;
+        justify-self: center;
+    }
+
+    .grid__colsm6 {
+        grid-column: span 6;
+        justify-self: center;
     }
 }
 
