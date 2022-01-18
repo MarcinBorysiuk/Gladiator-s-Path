@@ -15,13 +15,13 @@
             <tr><th><a class="btn btn-dark" style="width: 100%" href="/ranking">Ranking</a></th></tr>
         </table>
     </div>
-    <div class="cols grid__col6_training grid__colsm3">
+    <div class="cols grid__col12_training grid__colsm3">
         <img src="static/blacksmith.png">
     </div>
-    <div class="cols grid__col6_training grid__colsm3">
+    <div class="cols grid__col12_training grid__colsm3" style="text-align: center;">
         <h4>Ho ho ho!</h4>
         <br>
-        <strong>{{ player.name }}</strong>, my good old friend... How can i help this time?<br><br>
+        <strong>{{ player.name }}</strong>, my good old friend... How can i help this time?<br>
         <span style="font-size: 12px;">Blacksmith provides weapons which will increase your damage. Higher level weapons may increase some other stats aswell</span>
     </div>
 </section>
@@ -31,7 +31,6 @@
     </div>
     <div class="cols grid__col12 grid__colsm4">
         Available Weapons
-        <br>
         <br>
         <div style="border: solid #ffd24d 1px; height: 186px; width: 369px;">
             {% for weapon in blacksmith_weapons %}
@@ -52,7 +51,6 @@
     </div>
     <div class="cols grid__col12 grid__colsm4">
         Your Inventory
-        <br>
         <br>
         <div style="border: solid #ffd24d 1px; height: 186px; width: 369px;">
             {% for item in inventory %}

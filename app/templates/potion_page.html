@@ -3,92 +3,100 @@
 {% block head %}Potions{% endblock %}
 
 {% block content %}
-<div class="row" style="margin: 30px">
-    <div class="col-3">
+<section class="grid grid--gap10">
+    <div class="cols grid__col12 grid__colsm2">
         <table>
-            <tr><th><a class="link" href='/overview'>Overview</a></th></tr>
-            <tr><th><a class="link" href="/expedition">Expedition</a></th></tr>
-            <tr><th><a class="link" href="/training">Training</a></th></tr>
-            <tr><th><a class="link" href="/blacksmith">Blacksmith</a></th></tr>
-            <tr><th><a class="link" href="/armor">Armorer</a></th></tr>
-            <tr><th><a class="link" href="/potions">Potions</a></th></tr>
-            <tr><th><a class="link" href="/ranking">Ranking</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href='/overview'>Overview</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href="/expedition">Expedition</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href="/training">Training</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href="/blacksmith">Blacksmith</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href="/armor">Armorer</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href="/potions">Potions</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href="/ranking">Ranking</a></th></tr>
         </table>
     </div>
-    <div class="col-7">
-    <img src="static/potions.png" style="float: left; margin-right: 20px">
-    <div style="text-align: center; font-size: 14px;">
+    <div class="cols grid__col12_training grid__colsm3">
+        <img src="static/potions.png">
+    </div>
+    <div class="cols grid__col12_training grid__colsm3" style="text-align: center;">
         <br>
         <h4>Welcome... welcome</h4>
         <br>
         <h6>Don't touch any food! I have some better ways to regenerate after a fight... Brave enough to try something new?</h6>
-        <br>
-        Potion master provides food and potions which will regenerate your HP
+        <span style="font-size: 12px;">Potion master provides food and potions which will regenerate your HP</span>
     </div>
-    <div style="margin-top: 71px; margin-bottom: 20px;">
-        Available potions. Click on to see details.
-    </div>
-    <div style="border: solid #ffd24d 1px; height: 186px; width: 369px;">
-    {% for potion in potion_master_potions %}
-    {% include 'includes/potion_master_potion.html' %}
-        {% if potion.owner == None %}
-            <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
-                <a data-toggle="modal" data-target="#Modal-PotionMasterPotion-{{ potion.id }}">
-                    <img src="{{ potion.picture }}" height="55" width="55">
-                </a>
-            </div>
-        {% elif potion == '' %}
-        <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
-        
-        </div>
-        {% endif %}
-    {% endfor %}
-    </div>
-    <div style="border: solid #ffd24d 1px; height: 186px; width: 369px; float: right; margin-top: -185px;">
-        {% for item in inventory %}
-        {% include 'includes/inventory_weapon.html' %}
-        {% include 'includes/inventory_armor.html' %}
-        {% include 'includes/inventory_shield.html' %}
-        {% include 'includes/inventory_helmet.html' %}
-        {% include 'includes/inventory_boots.html' %}
-        {% include 'includes/inventory_potion.html' %}
-            {% if item != '' %}
-            <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
-                {% if item in weapons %}
-                    <a data-toggle="modal" data-target="#Modal-InventoryWeapon-{{ item.id }}">
-                        <img src="{{ item.picture }}" height="55" width="55">
-                    </a>
-                {% elif item in shields %}
-                    <a data-toggle="modal" data-target="#Modal-InventoryShield-{{ item.id }}">
-                        <img src="{{ item.picture }}" height="55" width="55">
-                    </a>
-                {% elif item in armors %}
-                    <a data-toggle="modal" data-target="#Modal-InventoryArmor-{{ item.id }}">
-                        <img src="{{ item.picture }}" height="55" width="55">
-                    </a>
-                {% elif item in helmets %}
-                    <a data-toggle="modal" data-target="#Modal-InventoryHelmet-{{ item.id }}">
-                        <img src="{{ item.picture }}" height="55" width="55">
-                    </a>
-                {% elif item in boots %}
-                    <a data-toggle="modal" data-target="#Modal-InventoryBoots-{{ item.id }}">
-                        <img src="{{ item.picture }}" height="55" width="55">
-                    </a>
-                {% elif item in potions %}
-                    <a data-toggle="modal" data-target="#Modal-InventoryPotion-{{ item.id }}">
-                        <img src="{{ item.picture }}" height="55" width="55">
-                    </a>
-                {% endif %}
-            </div>
-            {% else %}
-            <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
+</section>
+<section class="grid grid--gap10">
+    <div class="cols grid__col12 grid__colsm2">
 
+    </div>
+    <div class="cols grid__col12 grid__colsm4">
+        Available potions
+        <div style="border: solid #ffd24d 1px; height: 186px; width: 369px;">
+        {% for potion in potion_master_potions %}
+        {% include 'includes/potion_master_potion.html' %}
+            {% if potion.owner == None %}
+                <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
+                    <a data-toggle="modal" data-target="#Modal-PotionMasterPotion-{{ potion.id }}">
+                        <img src="{{ potion.picture }}" height="55" width="55">
+                    </a>
+                </div>
+            {% elif potion == '' %}
+            <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
+            
             </div>
             {% endif %}
         {% endfor %}
+        </div>
     </div>
-    <div style="border: solid #ffd24d 1px; height: 28px; width: 160px; margin-top:1px; margin-left: 462px;">
-        <strong style="margin-left: 10px;">Gold: {{ player.gold }}</strong> <img src="https://findicons.com/files/icons/2250/payment_icon_set/64/gold_coin_stacks.png" width="20" height="20" style="margin-bottom: 2px;">
+    <div class="cols grid__col12 grid__colsm4">
+        Your Inventory
+        <div style="border: solid #ffd24d 1px; height: 186px; width: 369px;">
+            {% for item in inventory %}
+            {% include 'includes/inventory_weapon.html' %}
+            {% include 'includes/inventory_armor.html' %}
+            {% include 'includes/inventory_shield.html' %}
+            {% include 'includes/inventory_helmet.html' %}
+            {% include 'includes/inventory_boots.html' %}
+            {% include 'includes/inventory_potion.html' %}
+                {% if item != '' %}
+                <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
+                    {% if item in weapons %}
+                        <a data-toggle="modal" data-target="#Modal-InventoryWeapon-{{ item.id }}">
+                            <img src="{{ item.picture }}" height="55" width="55">
+                        </a>
+                    {% elif item in shields %}
+                        <a data-toggle="modal" data-target="#Modal-InventoryShield-{{ item.id }}">
+                            <img src="{{ item.picture }}" height="55" width="55">
+                        </a>
+                    {% elif item in armors %}
+                        <a data-toggle="modal" data-target="#Modal-InventoryArmor-{{ item.id }}">
+                            <img src="{{ item.picture }}" height="55" width="55">
+                        </a>
+                    {% elif item in helmets %}
+                        <a data-toggle="modal" data-target="#Modal-InventoryHelmet-{{ item.id }}">
+                            <img src="{{ item.picture }}" height="55" width="55">
+                        </a>
+                    {% elif item in boots %}
+                        <a data-toggle="modal" data-target="#Modal-InventoryBoots-{{ item.id }}">
+                            <img src="{{ item.picture }}" height="55" width="55">
+                        </a>
+                    {% elif item in potions %}
+                        <a data-toggle="modal" data-target="#Modal-InventoryPotion-{{ item.id }}">
+                            <img src="{{ item.picture }}" height="55" width="55">
+                        </a>
+                    {% endif %}
+                </div>
+                {% else %}
+                <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
+
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div style="border: solid #ffd24d 1px; height: 28px; width: 160px; margin-top:1px;">
+            <strong style="margin-left: 10px;">Gold: {{ player.gold }}</strong> <img src="https://findicons.com/files/icons/2250/payment_icon_set/64/gold_coin_stacks.png" width="20" height="20" style="margin-bottom: 2px;">
+        </div>
     </div>
-</div>
+</section>
 {% endblock %}

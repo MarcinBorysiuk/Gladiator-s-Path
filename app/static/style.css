@@ -42,6 +42,11 @@ body {
     justify-self: center;
 }
 
+.grid__col9 {
+    grid-column: span 9;
+    justify-self: center;
+}
+
 .grid__col10 {
     grid-column: span 10;
     justify-self: center;
@@ -49,6 +54,12 @@ body {
 
 .grid__col12 {
     grid-column: span 12;
+    justify-self: center;
+}
+
+.grid__col12_training {
+    grid-column: span 12;
+    margin-top: 40px;
     justify-self: center;
 }
 
@@ -85,6 +96,11 @@ body {
 
     .grid__colsm8 {
         grid-column: span 8;
+        justify-self: center;
+    }
+
+    .grid__colsm9 {
+        grid-column: span 9;
         justify-self: center;
     }
 

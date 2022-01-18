@@ -3,116 +3,125 @@
 {% block head %}Armors{% endblock %}
 
 {% block content %}
-<div class="row" style="margin: 30px">
-    <div class="col-3">
+<section class="grid grid--gap10">
+    <div class="cols grid__col12 grid__colsm2">
         <table>
-            <tr><th><a class="link" href='/overview'>Overview</a></th></tr>
-            <tr><th><a class="link" href="/expedition">Expedition</a></th></tr>
-            <tr><th><a class="link" href="/training">Training</a></th></tr>
-            <tr><th><a class="link" href="/blacksmith">Blacksmith</a></th></tr>
-            <tr><th><a class="link" href="/armor">Armorer</a></th></tr>
-            <tr><th><a class="link" href="/potions">Potions</a></th></tr>
-            <tr><th><a class="link" href="/ranking">Ranking</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href='/overview'>Overview</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href="/expedition">Expedition</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href="/training">Training</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href="/blacksmith">Blacksmith</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href="/armor">Armorer</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href="/potions">Potions</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href="/ranking">Ranking</a></th></tr>
         </table>
     </div>
-    <div class="col-7">
-    <img src="static/armour.png" style="float: left; margin-right: 20px;">
-    <div style="text-align: center; font-size: 14px; margin-top: 10px;">
+    <div class="cols grid__col12_training grid__colsm3">
+        <img src="static/armour.png">
+    </div>
+    <div class="cols grid__col12_training grid__colsm3" style="text-align: center;">
         <h4>Welcome in my armory!</h4>
         <br>
         <h6>Breastplates, shields, helmets... I have it all! The best steel and leather in the city!</h6>
-        <br>
-        Armorer provides Breastplates, shields etc. which will increase your armor. Higher level armors may increase some other stats aswell
+        <span style="font-size: 12px;">Armorer provides Breastplates, shields etc. which will increase your armor. Higher level armors may increase some other stats aswell</span>
     </div>
-    <div style="margin-top: 80px; margin-bottom: 20px;">
-        Available Armors. Click on to see details.
-    </div>
-    <div style="border: solid #ffd24d 1px; height: 369px; width: 369px;">
-        {% for item in items %}
-        {% include 'includes/armorer_armor.html' %}
-        {% include 'includes/armorer_shield.html' %}
-        {% include 'includes/armorer_helmet.html' %}
-        {% include 'includes/armorer_boots.html' %}
-        
-            {% if item.owner == None %}
-                {% if item in armorer_armors %}
-                    <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
-                        <a data-toggle="modal" data-target="#Modal-ArmorerArmor-{{ item.id }}">
-                            <img src="{{ item.picture }}" height="55" width="55">
-                        </a>
-                    </div>
-                {% elif item in armorer_shields %}
-                    <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
-                        <a data-toggle="modal" data-target="#Modal-ArmorerShield-{{ item.id }}">
-                            <img src="{{ item.picture }}" height="55" width="55">
-                        </a>
-                    </div>
-                {% elif item in armorer_helmets %}
-                    <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
-                        <a data-toggle="modal" data-target="#Modal-ArmorerHelmet-{{ item.id }}">
-                            <img src="{{ item.picture }}" height="55" width="55">
-                        </a>
-                    </div>
-                {% elif item in armorer_boots %}
-                    <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
-                        <a data-toggle="modal" data-target="#Modal-ArmorerBoots-{{ item.id }}">
-                            <img src="{{ item.picture }}" height="55" width="55">
-                        </a>
-                    </div>
-                {% endif %}
-            {% elif item == '' %}
-                <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
-                
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
-    <div style="border: solid #ffd24d 1px; height: 186px; width: 369px; float: right; margin-top: -368px;">
-        {% for item in inventory %}
-        {% include 'includes/inventory_weapon.html' %}
-        {% include 'includes/inventory_armor.html' %}
-        {% include 'includes/inventory_shield.html' %}
-        {% include 'includes/inventory_helmet.html' %}
-        {% include 'includes/inventory_boots.html' %}
-        {% include 'includes/inventory_potion.html' %}
-            {% if item != '' %}
-            <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
-                {% if item in weapons %}
-                    <a data-toggle="modal" data-target="#Modal-InventoryWeapon-{{ item.id }}">
-                        <img src="{{ item.picture }}" height="55" width="55">
-                    </a>
-                {% elif item in shields %}
-                    <a data-toggle="modal" data-target="#Modal-InventoryShield-{{ item.id }}">
-                        <img src="{{ item.picture }}" height="55" width="55">
-                    </a>
-                {% elif item in armors %}
-                    <a data-toggle="modal" data-target="#Modal-InventoryArmor-{{ item.id }}">
-                        <img src="{{ item.picture }}" height="55" width="55">
-                    </a>
-                {% elif item in helmets %}
-                    <a data-toggle="modal" data-target="#Modal-InventoryHelmet-{{ item.id }}">
-                        <img src="{{ item.picture }}" height="55" width="55">
-                    </a>
-                {% elif item in boots %}
-                    <a data-toggle="modal" data-target="#Modal-InventoryBoots-{{ item.id }}">
-                        <img src="{{ item.picture }}" height="55" width="55">
-                    </a>
-                {% elif item in potions %}
-                    <a data-toggle="modal" data-target="#Modal-InventoryPotion-{{ item.id }}">
-                        <img src="{{ item.picture }}" height="55" width="55">
-                    </a>
-                {% endif %}
-            </div>
-            {% else %}
-            <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
+</section>
+<section class="grid grid--gap10">
+    <div class="cols grid__col12 grid__colsm2">
 
-            </div>
-            {% endif %}
-        {% endfor %}
     </div>
-    <div style="border: solid #ffd24d 1px; height: 28px; width: 160px; margin-top: -182px; margin-left: 452.5px;">
-        <strong style="margin-left: 10px;">Gold: {{ player.gold }}</strong> <img src="https://findicons.com/files/icons/2250/payment_icon_set/64/gold_coin_stacks.png" width="20" height="20" style="margin-bottom: 2px;">
+    <div class="cols grid__col12 grid__colsm4">
+        Available armors
+        <br>
+        <div style="border: solid #ffd24d 1px; height: 369px; width: 369px;">
+            {% for item in items %}
+            {% include 'includes/armorer_armor.html' %}
+            {% include 'includes/armorer_shield.html' %}
+            {% include 'includes/armorer_helmet.html' %}
+            {% include 'includes/armorer_boots.html' %}
+            
+                {% if item.owner == None %}
+                    {% if item in armorer_armors %}
+                        <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
+                            <a data-toggle="modal" data-target="#Modal-ArmorerArmor-{{ item.id }}">
+                                <img src="{{ item.picture }}" height="55" width="55">
+                            </a>
+                        </div>
+                    {% elif item in armorer_shields %}
+                        <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
+                            <a data-toggle="modal" data-target="#Modal-ArmorerShield-{{ item.id }}">
+                                <img src="{{ item.picture }}" height="55" width="55">
+                            </a>
+                        </div>
+                    {% elif item in armorer_helmets %}
+                        <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
+                            <a data-toggle="modal" data-target="#Modal-ArmorerHelmet-{{ item.id }}">
+                                <img src="{{ item.picture }}" height="55" width="55">
+                            </a>
+                        </div>
+                    {% elif item in armorer_boots %}
+                        <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
+                            <a data-toggle="modal" data-target="#Modal-ArmorerBoots-{{ item.id }}">
+                                <img src="{{ item.picture }}" height="55" width="55">
+                            </a>
+                        </div>
+                    {% endif %}
+                {% elif item == '' %}
+                    <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
+                    
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
+    <div class="cols grid__col12 grid__colsm4">
+        Your Inventory
+        <br>
+        <div style="border: solid #ffd24d 1px; height: 186px; width: 369px;">
+            {% for item in inventory %}
+            {% include 'includes/inventory_weapon.html' %}
+            {% include 'includes/inventory_armor.html' %}
+            {% include 'includes/inventory_shield.html' %}
+            {% include 'includes/inventory_helmet.html' %}
+            {% include 'includes/inventory_boots.html' %}
+            {% include 'includes/inventory_potion.html' %}
+                {% if item != '' %}
+                <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
+                    {% if item in weapons %}
+                        <a data-toggle="modal" data-target="#Modal-InventoryWeapon-{{ item.id }}">
+                            <img src="{{ item.picture }}" height="55" width="55">
+                        </a>
+                    {% elif item in shields %}
+                        <a data-toggle="modal" data-target="#Modal-InventoryShield-{{ item.id }}">
+                            <img src="{{ item.picture }}" height="55" width="55">
+                        </a>
+                    {% elif item in armors %}
+                        <a data-toggle="modal" data-target="#Modal-InventoryArmor-{{ item.id }}">
+                            <img src="{{ item.picture }}" height="55" width="55">
+                        </a>
+                    {% elif item in helmets %}
+                        <a data-toggle="modal" data-target="#Modal-InventoryHelmet-{{ item.id }}">
+                            <img src="{{ item.picture }}" height="55" width="55">
+                        </a>
+                    {% elif item in boots %}
+                        <a data-toggle="modal" data-target="#Modal-InventoryBoots-{{ item.id }}">
+                            <img src="{{ item.picture }}" height="55" width="55">
+                        </a>
+                    {% elif item in potions %}
+                        <a data-toggle="modal" data-target="#Modal-InventoryPotion-{{ item.id }}">
+                            <img src="{{ item.picture }}" height="55" width="55">
+                        </a>
+                    {% endif %}
+                </div>
+                {% else %}
+                <div style="border: solid 1px #ffd24d; height: 60px; width: 60px; float: left; margin-left: 1px; margin-top:1px">
+    
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div style="border: solid #ffd24d 1px; height: 28px; width: 160px;">
+            <strong style="margin-left: 10px;">Gold: {{ player.gold }}</strong> <img src="https://findicons.com/files/icons/2250/payment_icon_set/64/gold_coin_stacks.png" width="20" height="20" style="margin-bottom: 2px;">
+        </div>
     </div>
-</div>
+</section>
 {% endblock %}
