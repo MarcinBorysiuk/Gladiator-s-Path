@@ -26,6 +26,18 @@ body {
     justify-self: center;
 }
 
+.grid__col4_fightleft {
+    grid-column: span 4;
+    justify-self: center;
+    margin-left:30px;
+}
+
+.grid__col4_fightright {
+    grid-column: span 4;
+    justify-self: center;
+    margin-right:30px;
+}
+
 .grid__col6 {
     grid-column: span 6;
     justify-self: center;

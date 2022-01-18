@@ -3,20 +3,20 @@
 {% block head %}Choose enemy{% endblock %}
 
 {% block content %}
-<div class="row" style="margin: 30px">
-    <div class="col-3">
+<section class="grid grid--gap10">
+    <div class="cols grid__col12 grid__colsm2">
         <table>
-            <tr><th><a class="link" href='/overview'>Overview</a></th></tr>
-            <tr><th><a class="link" href="/expedition">Expedition</a></th></tr>
-            <tr><th><a class="link" href="/training">Training</a></th></tr>
-            <tr><th><a class="link" href="/blacksmith">Blacksmith</a></th></tr>
-            <tr><th><a class="link" href="/armor">Armorer</a></th></tr>
-            <tr><th><a class="link" href="/potions">Potions</a></th></tr>
-            <tr><th><a class="link" href="/ranking">Ranking</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href='/overview'>Overview</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href="/expedition">Expedition</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href="/training">Training</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href="/blacksmith">Blacksmith</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href="/armor">Armorer</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href="/potions">Potions</a></th></tr>
+            <tr><th><a class="btn btn-dark" style="width: 100%" href="/ranking">Ranking</a></th></tr>
         </table>
     </div>
-    <div class="col-7">
-        <div class="text-center" style="margin-right: 70px;">
+    <div class="cols grid__col12 grid__colsm8" style="margin-top: 50px;">
+        <div class="text-center">
             {% if id == 1 %}
                 <h2 style="text-decoration: underline; color: red;">Cursed Forest</h2>
             {% elif id == 2 %}
@@ -31,21 +31,26 @@
             <br>
             <br>
         </div>
-        {% for enemy in enemies %}
-        <div style="float: left; margin: 10px">
-            <a href="fight/{{ enemy.id }}">
-                <img src="{{ enemy.picture }}" height="200" width="169">
-            </a>
-            <table style="width: 169px">
-                <tr>
-                    <th>{{ enemy.name }}</th>
-                </tr>
-                <tr>
-                    <th>Level {{ enemy.level }}-{{ enemy.level + 2 }}</th>
-                </tr>
-            </table>
-        </div>
-        {% endfor %}
-
     </div>
+</section>
+<section class="grid grid--gap10">
+    <div class="cols grid__col12 grid__colsm2"></div>
+    {% for enemy in enemies %}
+    <div class="cols grid__col6 grid__colsm2">
+        <a href="fight/{{ enemy.id }}">
+            <img src="{{ enemy.picture }}" height="200" width="169">
+        </a>
+        <table style="width: 169px">
+            <tr>
+                <th>{{ enemy.name }}</th>
+            </tr>
+            <tr>
+                <th>Level {{ enemy.level }}-{{ enemy.level + 2 }}</th>
+            </tr>
+        </table>
+    </div>
+    {% endfor %}
+</div>
+</section> 
+
 {% endblock %}
