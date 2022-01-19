@@ -34,9 +34,9 @@ Fight Page
     </div>
     <div class="cols grid__col12 grid__colsm6_fight">
         <div style="float: left;">
-            <img src="{{ player.picture }}">
+            <img src="{{ player.picture }}" width="140" height="180">
             <div>
-                <table>
+                <table style="width:140px">
                     <tr>
                         <th>{{ player.name }}</th>
                     </tr>
@@ -48,9 +48,9 @@ Fight Page
         </div>
         
         <div style="float: left; margin-left: 10px;">
-            <img src="{{ enemy_to_fight.picture }}" height="200" width="168">
+            <img src="{{ enemy_to_fight.picture }}" height="180" width="140">
             <div>
-                <table>
+                <table style="width:140px">
                     <tr>
                         <th>{{ enemy_to_fight.name }}</th>
                     </tr>
@@ -59,13 +59,9 @@ Fight Page
         </div>
     </div>
     
-    <div class="cols grid__col12 grid__colsm10_fight" style="border: solid 1px #ffd24d; width:400px; padding:10px;">
+    <div class="cols grid__col12 grid__colsm10_fight" style="border: solid 1px #ffd24d; width:400px; max-height: 450px;overflow: scroll; padding:10px;">
         <h5 style="text-align: center;">History of Fight</h5>
-        {% for record in history_of_fight[:10] %}
-            <p style="font-size: 14px; margin-bottom: 2px;"><strong>{{ record }}</strong></p>
-        {% endfor %}
-            <p>... <a>See whole fight</a> ...</p>
-        {% for record in history_of_fight[-5:] %}
+        {% for record in history_of_fight %}
             <p style="font-size: 14px; margin-bottom: 2px;"><strong>{{ record }}</strong></p>
         {% endfor %}
     </div>
