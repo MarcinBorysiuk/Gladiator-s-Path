@@ -26,17 +26,6 @@ body {
     justify-self: center;
 }
 
-.grid__col4_fightleft {
-    grid-column: span 4;
-    justify-self: center;
-    margin-left:30px;
-}
-
-.grid__col4_fightright {
-    grid-column: span 4;
-    justify-self: center;
-    margin-right:30px;
-}
 
 .grid__col6 {
     grid-column: span 6;
@@ -106,6 +95,13 @@ body {
         justify-self: center;
     }
 
+    .grid__colsm6_fight {
+        grid-column: span 6;
+        justify-self: center;
+        position: relative;
+        top:-150px
+    }
+
     .grid__colsm8 {
         grid-column: span 8;
         justify-self: center;
@@ -119,6 +115,13 @@ body {
     .grid__colsm10 {
         grid-column: span 10;
         justify-self: center;
+    }
+
+    .grid__colsm10_fight {
+        grid-column: span 10;
+        justify-self: center;
+        position: relative;
+        top:-120px
     }
 
     .grid__colsm12 {
