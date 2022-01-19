@@ -1012,12 +1012,19 @@ def take_off_boots(item_id):
     db.session.commit()
     return redirect(url_for('overview'))
 
-@app.route('/ranking')
-def ranking():
+@app.route('/ranking/<int:num>')
+def ranking(num):
+
     all_gladiators = data_managment.query_all_gladiators()
     all_gladiators = sorted(all_gladiators, key=lambda player: player.level)
     all_gladiators = all_gladiators[::-1]
-    return render_template('ranking_page.html', all_gladiators=all_gladiators)
+
+    if len(all_gladiators)%10 == 0:
+        last_page = len(all_gladiators)//10
+    else:
+        last_page = len(all_gladiators)//10 + 1
+
+    return render_template('ranking_page.html', all_gladiators=all_gladiators, num=num, last_page=last_page)
 
 
 @app.route('/ranking/<string:name>')
