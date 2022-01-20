@@ -1,8 +1,8 @@
 # Gladiator-s-Path
 
-Browser game about gladiators built with Flask web framework.<br />
-Register an account and start playing. In this game you will create your own warrior. The goal is to get the highest level in the Ranking.<br />
-Gain experience and level up by killing monsters suitable for your level. Train statistics and buy new Items which will increase your damage,armor,HP or even stats.<br />
+Mobile responsive browser game about gladiators built with Flask web framework.<br />
+Register an account and start playing. In this game you will create your own warrior. The goal is to get the highest level in the Ranking.
+Gain experience and level up by killing monsters suitable for your level. Train statistics and buy new Items which will increase your damage,armor,HP or even stats.
 Recover your HP by buying food or potions at potion master. For each level you will gain some stat points and your HP will increase.<br /><br />
 
 How to play:<br />
@@ -26,8 +26,8 @@ Screenshots below<br /><br />
 ![](app/static/gladaitor10.png)
 ![](app/static/gladaitor11.png)
 ![](app/static/gladaitor12.png)
-![](app/static/gladaitor13.png)
-![](app/static/gladaitor14.png)
-![](app/static/gladaitor15.png)
-![](app/static/gladaitor16.png)
-![](app/static/gladaitor17.png)
+![](app/static/gladaitor13.jpg)
+![](app/static/gladaitor14.jpg)
+![](app/static/gladaitor15.jpg)
+![](app/static/gladaitor16.jpg)
+![](app/static/gladaitor17.jpg)
