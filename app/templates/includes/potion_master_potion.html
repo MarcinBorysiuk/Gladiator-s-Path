@@ -1,11 +1,11 @@
 <style>
     .modal-content {
-      background-color: #212121
+      background-color: #212121;
     }
 
   </style>
   
-
+{% if potion.owner == None %}
   <div class="modal fade" id="Modal-PotionMasterPotion-{{ potion.id }}"
        tabindex="-1"
        aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -31,10 +31,15 @@
           
         </div>
         <div class="modal-footer">
-          <form method="POST" action="/potion/buy/{{ potion.id }}">
-            <button type="submit" class="btn btn-success" style="margin-right: 57px;">Buy</button>
-          </form>
+            {% if player.gold >= potion.cost and player.level >= potion.level %}
+                <form method="POST" action="/potion/buy/{{ potion.id }}">
+                    <button type="submit" class="btn btn-success" style="margin-right: 57px;">Buy</button>
+                </form>
+            {% else %}
+                <p style="margin-right: 15px; color: red">Cannot buy this item</p>
+            {% endif %}
         </div>
       </div>
     </div>
   </div>
+{% endif %}

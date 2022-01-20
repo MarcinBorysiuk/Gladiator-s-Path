@@ -69,8 +69,16 @@ body {
     border: solid #ffd24d 1px;
 }
 
+.modal {
+    margin-left: 25%;
+}
+
 
 @media (min-width: 768px) {
+    .modal {
+        margin-left: 0%;
+    }
+
     .grid__colsm1 {
         grid-column: span 1;
         justify-self: center;
@@ -135,8 +143,6 @@ body {
         border: solid #ffd24d 1px;
     }
 }
-
-
 
 table, th, tr {
     border:2px solid #ffd24d;

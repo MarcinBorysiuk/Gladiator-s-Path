@@ -226,6 +226,7 @@ def blacksmith():
 
     while len(blacksmith_weapons) < 18:
         blacksmith_weapons.append('')
+        
     user = flask_login.current_user
     player = user.gladiator[0]
 
@@ -335,7 +336,6 @@ def potions():
         potion_master_potions.append('')
     user = flask_login.current_user
     player = user.gladiator[0]
-
     weapons = player.weapons
     armors = player.armors
     shields = player.shields
