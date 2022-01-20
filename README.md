@@ -28,4 +28,7 @@ Screenshots below<br /><br />
 ![](app/static/gladaitor12.png)
 <img src="https://github.com/MarcinBorysiuk/Gladiator-s-Path/blob/master/app/static/gladaitor13.jpg" width="500" height="1000" />
 <img src="https://github.com/MarcinBorysiuk/Gladiator-s-Path/blob/master/app/static/gladaitor14.jpg" width="500" height="1000" />
-![](app/static/gladaitor15.jpg)![](app/static/gladaitor16.jpg)![](app/static/gladaitor17.jpg)
+<img src="https://github.com/MarcinBorysiuk/Gladiator-s-Path/blob/master/app/static/gladaitor15.jpg" width="500" height="1000" />
+<img src="https://github.com/MarcinBorysiuk/Gladiator-s-Path/blob/master/app/static/gladaitor16.jpg" width="500" height="1000" />
+<img src="https://github.com/MarcinBorysiuk/Gladiator-s-Path/blob/master/app/static/gladaitor17.jpg" width="500" height="1000" />
+
