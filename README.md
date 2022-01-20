@@ -1,5 +1,6 @@
 # Gladiator-s-Path
-
+<br />
+<br />
 Mobile responsive browser game about gladiators built with Flask web framework.<br />
 Register an account and start playing. In this game you will create your own warrior. The goal is to get the highest level in the Ranking.
 Gain experience and level up by killing monsters suitable for your level. Train statistics and buy new Items which will increase your damage,armor,HP or even stats.
@@ -26,9 +27,9 @@ Screenshots below<br /><br />
 ![](app/static/gladaitor10.png)
 ![](app/static/gladaitor11.png)
 ![](app/static/gladaitor12.png)
-<img src="https://github.com/MarcinBorysiuk/Gladiator-s-Path/blob/master/app/static/gladaitor13.jpg" width="300" height="700" />
-<img src="https://github.com/MarcinBorysiuk/Gladiator-s-Path/blob/master/app/static/gladaitor14.jpg" width="300" height="700" />
-<img src="https://github.com/MarcinBorysiuk/Gladiator-s-Path/blob/master/app/static/gladaitor15.jpg" width="300" height="700" />
-<img src="https://github.com/MarcinBorysiuk/Gladiator-s-Path/blob/master/app/static/gladaitor16.jpg" width="500" height="1000" />
-<img src="https://github.com/MarcinBorysiuk/Gladiator-s-Path/blob/master/app/static/gladaitor17.jpg" width="500" height="1000" />
+<img src="https://github.com/MarcinBorysiuk/Gladiator-s-Path/blob/master/app/static/gladaitor13.jpg" width="400" height="700" />
+<img src="https://github.com/MarcinBorysiuk/Gladiator-s-Path/blob/master/app/static/gladaitor14.jpg" width="400" height="700" />
+<img src="https://github.com/MarcinBorysiuk/Gladiator-s-Path/blob/master/app/static/gladaitor15.jpg" width="400" height="700" />
+<img src="https://github.com/MarcinBorysiuk/Gladiator-s-Path/blob/master/app/static/gladaitor16.jpg" width="400" height="700" />
+<img src="https://github.com/MarcinBorysiuk/Gladiator-s-Path/blob/master/app/static/gladaitor17.jpg" width="400" height="700" />
 
